@@ -1,1 +1,4 @@
 faster-whisper
+dir test.mp4
+faster-whisper
+av<19
