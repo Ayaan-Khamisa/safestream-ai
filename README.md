@@ -58,3 +58,8 @@ Edit `bad_words.txt` (one lowercase word per line) to change what gets censored.
 - It matches whole words from a list and knows nothing about context, so innocent uses of a listed word get flagged too.
 - English only.
 - Tested on `.mp4` files, and on one `.mov` re-wrap of the same clip. Other formats and codecs are untested.
+I also ran a second test on a clip made with an AI text-to-speech voice. It was audio only, so I wrapped it in a plain black video with FFmpeg first. Every listed swear word in the script was beeped at the right moment. A clean synthetic voice is easier for speech recognition than a real person in a noisy room, so this shows the pipeline works on a different voice and file type. It doesn't show it will catch every word in real-world recordings.
+
+
+I also ran a second test on a clip made with an AI text-to-speech voice. It was audio only, so I wrapped it in a plain black video with FFmpeg first. Every listed swear word in the script was beeped at the right moment. A clean synthetic voice is easier for speech recognition than a real person in a noisy room, so this shows the pipeline works on a different voice and file type. It doesn't show it will catch every word in real-world recordings.
+
