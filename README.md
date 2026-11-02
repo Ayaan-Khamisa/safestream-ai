@@ -25,7 +25,6 @@ I tested it on a 10-second clip of myself arguing about a video game. The smalle
 
 ## Usage
 
-## Usage
 
 ```
 python censor.py yourvideo.mp4
@@ -39,6 +38,12 @@ python censor.py yourvideo.mp4 --mode silence
 ```
 
 Edit `bad_words.txt` (one lowercase word per line) to change what gets censored.## Limitations
+
+- Speech recognition makes mistakes, so a swear word can be misheard and missed. Larger models help but are slower.
+- It matches whole words from a list and knows nothing about context, so innocent uses of a listed word get flagged too.
+- English only.
+- Tested on `.mp4` files, and on one `.mov` re-wrap of the same clip. Other formats and codecs are untested.
+## Limitations
 
 - Speech recognition makes mistakes, so a swear word can be misheard and missed. Larger models help but are slower.
 - It matches whole words from a list and knows nothing about context, so innocent uses of a listed word get flagged too.
