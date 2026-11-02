@@ -1,7 +1,10 @@
+import argparse
 import shutil
 import subprocess
+from pathlib import Path
 
 from detect import clean, find_bad_words, load_bad_words
+from extract_audio import extract_audio
 from transcribe import transcribe
 
 PADDING = 0.05  # seconds added either side, to cover small timing errors
@@ -45,13 +48,39 @@ def censor_video(video_path, output_path, segments, mode="beep"):
     subprocess.run(command, check=True)
 
 
-if __name__ == "__main__":
-    words = transcribe("test_audio.wav")
+def main():
+    parser = argparse.ArgumentParser(
+        description="Beep or silence bad words in a video's audio."
+    )
+    parser.add_argument("video", help="path to the input video, e.g. clip.mp4")
+    parser.add_argument(
+        "--mode",
+        choices=["beep", "silence", "both"],
+        default="both",
+        help="what to replace bad words with (default: both)",
+    )
+    args = parser.parse_args()
+
+    video = Path(args.video)
+    if not video.exists():
+        parser.error(f"file not found: {video}")
+
+    audio_path = video.with_name(f"{video.stem}_audio.wav")
+    extract_audio(str(video), str(audio_path))
+
+    words = transcribe(str(audio_path))
     found = find_bad_words(words, load_bad_words())
     segments = [(w["start"], w["end"]) for w in found]
     for w in found:
         print("Censoring:", clean(w["word"]), f'{w["start"]:.2f}-{w["end"]:.2f}')
+    print(f"{len(found)} word(s) flagged")
 
-    censor_video("test.mp4", "test_beep.mp4", segments, mode="beep")
-    censor_video("test.mp4", "test_silence.mp4", segments, mode="silence")
-    print("Done: test_beep.mp4 and test_silence.mp4")
+    modes = ["beep", "silence"] if args.mode == "both" else [args.mode]
+    for mode in modes:
+        output = video.with_name(f"{video.stem}_{mode}.mp4")
+        censor_video(str(video), str(output), segments, mode=mode)
+        print("Wrote", output)
+
+
+if __name__ == "__main__":
+    main()

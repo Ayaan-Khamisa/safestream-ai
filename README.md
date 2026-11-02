@@ -25,17 +25,21 @@ I tested it on a 10-second clip of myself arguing about a video game. The smalle
 
 ## Usage
 
-Put a video named `test.mp4` in the project folder, then run:
+## Usage
 
 ```
-python extract_audio.py
-python censor.py
+python censor.py yourvideo.mp4
 ```
 
-This writes `test_beep.mp4` and `test_silence.mp4`.
+This writes `yourvideo_beep.mp4` and `yourvideo_silence.mp4` next to the original. To make only one version:
 
-## Limitations
+```
+python censor.py yourvideo.mp4 --mode beep
+python censor.py yourvideo.mp4 --mode silence
+```
+
+Edit `bad_words.txt` (one lowercase word per line) to change what gets censored.## Limitations
 
 - Speech recognition makes mistakes, so a swear word can be misheard and missed. Larger models help but are slower.
 - It matches whole words from a list and knows nothing about context, so innocent uses of a listed word get flagged too.
-- English only, and file names are currently fixed in the code.
+- English only.
