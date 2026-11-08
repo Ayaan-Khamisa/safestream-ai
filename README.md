@@ -1,3 +1,7 @@
+## Demo
+
+Watch the demo on LinkedIn: [SafeStream AI demo] https://github.com/user-attachments/assets/10d17a12-766b-4cd0-bc42-a0e55e3808e2
+
 # SafeStream AI
 
 Detects inappropriate language in a video's audio and replaces it with a beep or silence.
